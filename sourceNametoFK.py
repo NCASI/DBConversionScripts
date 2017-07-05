@@ -4,10 +4,6 @@ from csvreader import *
 flowdata = readCSV('flowdata.csv')
 sources = readCSV('sourcestbl.csv')
 
-#delete column headers
-del flowdata[0]
-del sources[0]
-
 sourceNames = [i[1] for i in sources]   #get source names
 flowcounter = 0                         #counter for total flow data info
 foundcounter = 0                        #counter for correct matches
@@ -16,7 +12,7 @@ incorrectMatches = []                   #holds flows that were matched incorrect
 
 #iterate thru flowdata
 for i in enumerate(flowdata):
-
+    if i[0] == 0: continue  #skip the column header row
     flowsource = i[1][9]    #variable to hold the flowdata's source
     flowcounter += 1        
 
@@ -36,6 +32,14 @@ for i in enumerate(flowdata):
     else:
         notFound.append(flowsource)
 
+#write to file
+with open('flowdataWithSourceKeys.csv', 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile)
+    for i in flowdata:
+        csvwriter.writerow(i)
+
+csvfile.close()
+    
 #print results
 print("=================================")
 print("Found",foundcounter,"out of",flowcounter,"matches.")
