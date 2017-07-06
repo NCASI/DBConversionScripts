@@ -4,6 +4,9 @@ import csv
 def convertMillIDs(filename):
     millID = readCSVasDict('MillIDConversion.csv')
     f = readCSV(filename)
+    if f is None or millID is None:
+        print("Error reading in files!")
+        return
     changectr = 0
     totalctr = 0
     for i in enumerate(f):
