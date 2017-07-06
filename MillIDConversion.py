@@ -30,3 +30,20 @@ def convertMillIDs(filename):
     print("=================================")
     print("Changed",changectr,"out of",totalctr,"entries.")
     print("=================================")
+
+
+def generateSQLforMillInfo():
+    f = readCSV('MillIDConversion.csv')
+    t = open('correctMillIDs.sql', 'w')
+    changectr = 0
+    del f[0]
+    for i in f:
+        old = int(i[0])
+        new = int(i[1])
+        if old != new:
+            sql = "UPDATE dbo.MillInformation SET MillID = " + str(old) + " WHERE MillID = " + str(new) + "\n"
+            t.write(sql)
+            changectr += 1
+    print(changectr, " rows changed.")
+    t.close()
+generateSQLforMillInfo()
