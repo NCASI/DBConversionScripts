@@ -1,3 +1,14 @@
+"""
+This script takes in a CSV file and changes source names
+to foreign keys for import into the Mill Data database in
+SQL server.
+
+
+INPUT: CSV file of table from Access
+OUTPUT: CSV file of table to be imported to SQL Server
+DEPENDENCIES: sourcestbl.csv
+"""
+
 from csvreader import *
 
 #read in data
