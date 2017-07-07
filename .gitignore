@@ -3,3 +3,6 @@
 *.xlsx
 *.pyc
 correctMillIDs.sql
+DBConversionScripts.pyproj
+DBConversionScripts.sln
+.vs/DBConversionScripts/v15/.suo

@@ -15,11 +15,12 @@ def convertMillIDs(filename):
         oldID = i[1][0]
         newID = millID[oldID][0]
         if newID != oldID:
+
             #print(oldID, "!=", newID)
             i[1][0] = newID
             changectr += 1
     #write to file
-    newfile = 'NEW_'+filename
+    newfile = 'NEW_' + filename
     with open(newfile, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         for i in f:
