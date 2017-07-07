@@ -47,3 +47,5 @@ def generateSQLforMillInfo():
             changectr += 1
     print(changectr, " rows changed.")
     t.close()
+
+convertMillIDs('prodDataWithProdcatIDs.csv')
