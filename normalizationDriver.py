@@ -23,6 +23,6 @@ import csv
 sourceCol = 5
 filename = 'SludgeData.csv'
 
-millIDConverted = convertMillIDs(filename)
-sourcesConverted = convertSources(millIDConverted, sourceCol)
-print("\n **** Your target file is: ", sourcesConverted, " ****")
+newFile = convertMillIDs(filename)
+newFile = convertSources(millIDConverted, sourceCol)
+print("\n **** Your target file is: ", newFile, " ****")
