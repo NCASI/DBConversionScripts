@@ -48,7 +48,9 @@ def convertSources(filename, sourceCol):
             emptyVals += 1
 
     #write to file
-    with open('waterTreatmtWithSourceKeys.csv', 'w', newline='') as csvfile:
+    
+    newFile = filename.strip('.csv') + 'WithSourceKeys.csv'
+    with open(newFile, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         for i in flowdata:
             csvwriter.writerow(i)
@@ -72,3 +74,4 @@ def convertSources(filename, sourceCol):
         print("The following sources were matched incorrectly:")
         print(', '.join(incorrectMatches))
     print("=============================================")
+    return newFile
