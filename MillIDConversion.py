@@ -28,9 +28,11 @@ def convertMillIDs(filename):
 
     csvfile.close()
     #print results
-    print("=================================")
+    print("=============================================")
+    print("---Converting Mill IDs to Mill Keys---")
     print("Changed",changectr,"out of",totalctr,"entries.")
-    print("=================================")
+    print("=============================================")
+    return newfile
 
 
 def generateSQLforMillInfo():
@@ -47,5 +49,3 @@ def generateSQLforMillInfo():
             changectr += 1
     print(changectr, " rows changed.")
     t.close()
-
-convertMillIDs('prodDataWithProdcatIDs.csv')

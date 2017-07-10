@@ -11,61 +11,64 @@ DEPENDENCIES: sourcestbl.csv
 
 from csvreader import *
 
-#read in data
-flowdata = readCSV('prodcats.csv')
-sources = readCSV('sourcestbl.csv')
 
-sourceNames = [i[1] for i in sources]   #get source names
-flowcounter = 0                         #counter for total flow data info
-foundcounter = 0                        #counter for correct matches
-notFound = []                           #holds flows with no source
-incorrectMatches = []                   #holds flows that were matched incorrectly
-emptyVals = 0
-#iterate thru flowdata
-for i in enumerate(flowdata):
-    if i[0] == 0: continue  #skip the column header row
-    flowsource = i[1][5]    #variable to hold the flowdata's source
-    flowcounter += 1        
+def convertSources(filename, sourceCol):
+    #read in data
+    flowdata = readCSV(filename)
+    sources = readCSV('sourcestbl.csv')
 
-    #check if source exists in Sources Table
-    if flowsource in sourceNames:    
+    sourceNames = [i[1] for i in sources]   #get source names
+    flowcounter = 0                         #counter for total flow data info
+    foundcounter = 0                        #counter for correct matches
+    notFound = []                           #holds flows with no source
+    incorrectMatches = []                   #holds flows that were matched incorrectly
+    emptyVals = 0
+    #iterate thru flowdata
+    for i in enumerate(flowdata):
+        if i[0] == 0: continue  #skip the column header row
+        flowsource = i[1][sourceCol - 1]    #variable to hold the flowdata's source
+        flowcounter += 1        
 
-        #change the flow data if the source names match
-        if flowdata[i[0]][5] == sources[sourceNames.index(flowsource)][1]:
-            flowdata[i[0]][5] = int(sources[sourceNames.index(flowsource)][0])
-            foundcounter += 1
+        #check if source exists in Sources Table
+        if flowsource in sourceNames:    
 
-        #if sources names don't match, write to incorrectMatches
+            #change the flow data if the source names match
+            if flowdata[i[0]][sourceCol - 1] == sources[sourceNames.index(flowsource)][1]:
+                flowdata[i[0]][sourceCol - 1] = int(sources[sourceNames.index(flowsource)][0])
+                foundcounter += 1
+
+            #if sources names don't match, write to incorrectMatches
+            else:
+                incorrectMatches.append((flowsource, sources[sourceNames.index(flowsource)][1]))
+
+        #if flow's source is not found, append to notFound
+        elif flowsource.strip() != '':
+            notFound.append(flowsource)
         else:
-            incorrectMatches.append((flowsource, sources[sourceNames.index(flowsource)][1]))
+            emptyVals += 1
 
-    #if flow's source is not found, append to notFound
-    elif flowsource.strip() != '':
-        notFound.append(flowsource)
-    else:
-        emptyVals += 1
+    #write to file
+    with open('waterTreatmtWithSourceKeys.csv', 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        for i in flowdata:
+            csvwriter.writerow(i)
 
-#write to file
-with open('prodcatsWithSourceKeys.csv', 'w', newline='') as csvfile:
-    csvwriter = csv.writer(csvfile)
-    for i in flowdata:
-        csvwriter.writerow(i)
+    csvfile.close()
+        
+    #print results
+    print("=============================================")
+    print("---Converting Source Names to Foreign Keys---")
+    print("Found",foundcounter,"out of",flowcounter,"matches.")
 
-csvfile.close()
-    
-#print results
-print("=============================================")
-print("Found",foundcounter,"out of",flowcounter,"matches.")
-
-    
-if emptyVals > 0:
-    print("There were", emptyVals, "empty source values.")
-    
-if notFound != []:
-    print("The following sources were not found:")
-    print(', '.join(notFound))
-    
-if incorrectMatches != []:
-    print("The following sources were matched incorrectly:")
-    print(', '.join(incorrectMatches))
-print("=============================================")
+        
+    if emptyVals > 0:
+        print("There were", emptyVals, "empty source values.")
+        
+    if notFound != []:
+        print("The following sources were not found:")
+        print(', '.join(notFound))
+        
+    if incorrectMatches != []:
+        print("The following sources were matched incorrectly:")
+        print(', '.join(incorrectMatches))
+    print("=============================================")
