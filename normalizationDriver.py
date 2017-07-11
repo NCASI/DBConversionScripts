@@ -19,7 +19,8 @@ INPUT PARAMETERS:
 
 #MAKE YOUR CHANGES HERE
 sourceCol = 5
-filename = 'siccodes.csv'
+millIDcol = 2
+filename = 'millsParents.csv'
 #########################
 
 import sys, os
@@ -42,6 +43,6 @@ from sourceNametoFK import *
 from MillIDConversion import *
 from csvreader import *
 
-newFile = convertMillIDs(filename)
+newFile = convertMillIDs(filename, millIDcol)
 #newFile = convertSources(millIDConverted, sourceCol)
-#print("\n **** Your target file is: ", newFile, " ****")
+print("\n **** Your target file is: ", newFile, " ****")

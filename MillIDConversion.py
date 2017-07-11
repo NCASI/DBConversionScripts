@@ -1,7 +1,8 @@
 from csvreader import *
 import csv
 
-def convertMillIDs(filename):
+def convertMillIDs(filename, col):
+    millIDcol = col - 1
     millID = readCSVasDict('MillIDConversion.csv')
     f = readCSV(filename)
     if f is None or millID is None:
@@ -12,12 +13,12 @@ def convertMillIDs(filename):
     for i in enumerate(f):
         totalctr += 1
         if i[0] == 0: continue
-        oldID = i[1][0]
+        oldID = i[1][millIDcol]
         newID = millID[oldID][0]
         if newID != oldID:
 
             #print(oldID, "!=", newID)
-            i[1][0] = newID
+            i[1][millIDcol] = newID
             changectr += 1
     #write to file
     newfile = 'NEW_' + filename
