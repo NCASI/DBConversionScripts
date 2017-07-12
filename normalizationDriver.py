@@ -19,8 +19,8 @@ INPUT PARAMETERS:
 
 #MAKE YOUR CHANGES HERE
 sourceCol = 5
-millIDcol = 2
-filename = 'millsParents.csv'
+millIDcol = 1
+filename = 'millContacts.csv'
 #########################
 
 import sys, os
