@@ -18,9 +18,9 @@ INPUT PARAMETERS:
 """
 
 #MAKE YOUR CHANGES HERE
-sourceCol = 5
+sourceCol = 6
 millIDcol = 1
-filename = 'millContacts.csv'
+filename = 'sample.csv'
 #########################
 
 import sys, os
@@ -44,5 +44,5 @@ from MillIDConversion import *
 from csvreader import *
 
 newFile = convertMillIDs(filename, millIDcol)
-#newFile = convertSources(millIDConverted, sourceCol)
+newFile = convertSources(newFile, sourceCol)
 print("\n **** Your target file is: ", newFile, " ****")
