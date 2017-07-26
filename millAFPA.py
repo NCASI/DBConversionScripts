@@ -10,7 +10,10 @@ for i in f:
     total +=1 
     if i[0] == '':
         continue
-    valstr = " SET MillInformation.AFPACode = " + i[0]
+    
+    value = "'"+i[0]+"'"
+    print(i[0], i[1])
+    valstr = " SET MillInformation.AFPACode = " + value
     wherestr = " WHERE MillInformation.MillID = " + i[1] + "\n"
     updateSql = updatestr + valstr + wherestr
     t.write(updateSql)
