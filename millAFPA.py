@@ -11,8 +11,7 @@ for i in f:
     if i[0] == '':
         continue
     
-    value = "'"+i[0]+"'"
-    print(i[0], i[1])
+    value = "'"+i[0].strip()+"'"
     valstr = " SET MillInformation.AFPACode = " + value
     wherestr = " WHERE MillInformation.MillID = " + i[1] + "\n"
     updateSql = updatestr + valstr + wherestr
